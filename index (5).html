@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Health360: Healthcare Risk &amp; Disease Analytics</title>
+<style>
+:root{--ink:#16262b;--muted:#5d7178;--teal:#114f5e;--bg:#f3f7f8;--card:#fff;--line:#d5e1e4;--red:#c0392b;--amber:#d98e04;--blue:#3b5b92;--green:#5b9a8b}
+@media(prefers-color-scheme:dark){:root{--ink:#e6eef0;--muted:#9fb3b9;--teal:#7cc3d3;--bg:#0f1b1f;--card:#16272c;--line:#2b4047}}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.6 Georgia,"Times New Roman",serif;color:var(--ink);background:var(--bg)}
+h1,h2,h3,.sans{font-family:"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:980px;margin:0 auto;padding:32px 20px 64px}
+h1{font-size:2.1rem;line-height:1.15;margin:0 0 6px;color:var(--teal)}
+h2{font-size:1.4rem;margin:44px 0 6px;color:var(--teal);border-bottom:2px solid var(--line);padding-bottom:6px}
+h3{font-size:1.05rem;margin:22px 0 8px}
+p{max-width:75ch}
+.sub,.note{color:var(--muted);font-size:.9rem}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+nav a{font:600 .85rem "Segoe UI",Arial,sans-serif;color:var(--teal);border:1px solid var(--line);background:var(--card);padding:6px 12px;border-radius:6px;text-decoration:none}
+nav a:focus-visible,nav a:hover{outline:2px solid var(--teal)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:16px 0}
+.kpis div{background:var(--card);padding:12px 14px}
+.kpis b{display:block;font:700 1.5rem "Segoe UI",Arial,sans-serif}
+.kpis span{font-size:.82rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.card h3{margin-top:0}
+.bar{display:grid;grid-template-columns:110px 1fr 48px;align-items:center;gap:8px;font:.85rem "Segoe UI",Arial,sans-serif;margin:6px 0}
+.bar i{display:block;height:16px;border-radius:3px;background:var(--teal)}
+.bar .r{background:var(--red)}.bar .a{background:var(--amber)}.bar .b{background:var(--blue)}.bar .g{background:var(--green)}
+.bar em{font-style:normal;text-align:right}
+.legend{font:.8rem "Segoe UI",Arial,sans-serif;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.legend s{text-decoration:none;display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font:.88rem "Segoe UI",Arial,sans-serif;background:var(--card)}
+th{background:var(--teal);color:#fff;text-align:left;padding:8px 10px}
+@media(prefers-color-scheme:dark){th{color:#0f1b1f}}
+td{padding:7px 10px;border-bottom:1px solid var(--line)}
+pre{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--teal);padding:12px 14px;overflow-x:auto;font-size:.82rem;line-height:1.5;border-radius:4px}
+.persona h3{margin-bottom:2px}.persona .role{font:600 .8rem "Segoe UI",Arial,sans-serif;color:var(--muted);margin:0 0 8px}
+.persona p{margin:6px 0;font-size:.95rem}
+footer{margin-top:48px;color:var(--muted);font-size:.85rem}
+@media print{nav{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Health360: Healthcare Risk &amp; Disease Analytics</h1>
+<p class="sub sans">Early detection and risk intelligence for heart disease, diabetes and stroke. Built in Tableau for the Skillwallet Data Analytics program. Synthetic data, educational use only.</p>
+<nav aria-label="Sections">
+<a href="#dashboard">Dashboard report</a>
+<a href="#guide">Visualization guide</a>
+<a href="#insights">Insights</a>
+<a href="#case">Case study</a>
+<a href="#report">Final project report</a>
+</nav>
+</header>
+
+<section id="dashboard">
+<h2>1. Chronic Disease Risk Analysis Dashboard</h2>
+<p class="sub sans">Heart disease, diabetes and stroke across 600 patients.</p>
+
+<h3>Clinical risk analysis</h3>
+<div class="kpis">
+<div><b>600</b><span>Patients</span></div>
+<div><b>6.3%</b><span>High risk</span></div>
+<div><b>26.6</b><span>Average BMI</span></div>
+<div><b>116</b><span>Avg systolic BP</span></div>
+<div><b>192</b><span>Avg cholesterol</span></div>
+<div><b>99</b><span>Avg glucose</span></div>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Patients by risk level</h3>
+<div class="bar"><span>Low</span><i class="g" style="width:59.7%"></i><em>59.7%</em></div>
+<div class="bar"><span>Medium</span><i class="a" style="width:34%"></i><em>34.0%</em></div>
+<div class="bar"><span>High</span><i class="r" style="width:6.3%"></i><em>6.3%</em></div></div>
+<div class="card"><h3>Disease prevalence (%)</h3>
+<div class="bar"><span>Heart disease</span><i class="r" style="width:19.8%"></i><em>19.8%</em></div>
+<div class="bar"><span>Diabetes</span><i class="a" style="width:19.8%"></i><em>19.8%</em></div>
+<div class="bar"><span>Stroke</span><i class="b" style="width:6.5%"></i><em>6.5%</em></div></div>
+</div>
+
+<h3>Highest-risk patients (top 8 by risk score, then age)</h3>
+<div class="tw"><table>
+<thead><tr><th>Patient</th><th>Age</th><th>Blood pressure</th><th>Cholesterol</th><th>Glucose</th><th>Risk score / level</th></tr></thead>
+<tbody>
+<tr><td>P1273</td><td>79</td><td>127/89</td><td>272</td><td>138</td><td>6 / High</td></tr>
+<tr><td>P1126</td><td>69</td><td>121/69</td><td>234</td><td>133</td><td>6 / High</td></tr>
+<tr><td>P1212</td><td>48</td><td>147/92</td><td>197</td><td>135</td><td>6 / High</td></tr>
+<tr><td>P1349</td><td>70</td><td>148/90</td><td>182</td><td>114</td><td>5 / High</td></tr>
+<tr><td>P1365</td><td>70</td><td>142/81</td><td>190</td><td>98</td><td>5 / High</td></tr>
+<tr><td>P1233</td><td>66</td><td>121/65</td><td>240</td><td>122</td><td>5 / High</td></tr>
+<tr><td>P1148</td><td>63</td><td>137/84</td><td>243</td><td>110</td><td>5 / High</td></tr>
+<tr><td>P1369</td><td>60</td><td>147/94</td><td>288</td><td>98</td><td>5 / High</td></tr>
+</tbody></table></div>
+<p class="note">Risk score is a dataset-defined indicator, not a clinical diagnosis.</p>
+
+<h3>Lifestyle analysis</h3>
+<p class="sub">Heart disease rate (%) by smoking and exercise level (n in brackets).</p>
+<div class="tw"><table>
+<thead><tr><th>Exercise level</th><th>Never</th><th>Former</th><th>Current</th></tr></thead>
+<tbody>
+<tr><td>Low</td><td>24.5% (n=139)</td><td>21.3% (n=47)</td><td>36.5% (n=63)</td></tr>
+<tr><td>Medium</td><td>15.0% (n=140)</td><td>7.7% (n=39)</td><td>18.9% (n=53)</td></tr>
+<tr><td>High</td><td>16.1% (n=62)</td><td>3.7% (n=27)</td><td>23.3% (n=30)</td></tr>
+</tbody></table></div>
+
+<div class="grid" style="margin-top:16px">
+<div class="card"><h3>Average glucose by age group (mg/dL)</h3>
+<div class="bar"><span>18-29</span><i style="width:85.5%"></i><em>91.1</em></div>
+<div class="bar"><span>30-44</span><i style="width:89.3%"></i><em>95.3</em></div>
+<div class="bar"><span>45-59</span><i style="width:94.2%"></i><em>100.5</em></div>
+<div class="bar"><span>60-74</span><i style="width:100%"></i><em>106.8</em></div>
+<div class="bar"><span>75+</span><i style="width:98.8%"></i><em>105.5</em></div></div>
+<div class="card"><h3>Symptom prevalence (%)</h3>
+<div class="bar"><span>Chest pain</span><i style="width:33.7%"></i><em>10.2%</em></div>
+<div class="bar"><span>Fatigue</span><i style="width:100%"></i><em>30.3%</em></div>
+<div class="bar"><span>Dizziness</span><i style="width:36.3%"></i><em>11.0%</em></div></div>
+</div>
+<p class="note">Alcohol-use categories with missing values are shown as "Missing". "Any listed symptom" means at least one of chest pain, fatigue or dizziness is marked Yes.</p>
+
+<h3>Population analysis</h3>
+<div class="grid">
+<div class="card"><h3>Disease rate (%) by age group</h3>
+<div class="legend"><span><s style="background:var(--red)"></s>Heart disease</span><span><s style="background:var(--amber)"></s>Diabetes</span><span><s style="background:var(--blue)"></s>Stroke</span></div>
+<div class="tw"><table><thead><tr><th>Age</th><th>Heart</th><th>Diabetes</th><th>Stroke</th></tr></thead><tbody>
+<tr><td>18-29</td><td>1</td><td>10</td><td>3</td></tr>
+<tr><td>30-44</td><td>11</td><td>17</td><td>2</td></tr>
+<tr><td>45-59</td><td>21</td><td>20</td><td>7</td></tr>
+<tr><td>60-74</td><td>42</td><td>29</td><td>15</td></tr>
+<tr><td>75+</td><td>45</td><td>30</td><td>20</td></tr></tbody></table></div>
+<p class="note">Values read from the chart, approximate.</p></div>
+<div class="card"><h3>Exercise levels</h3>
+<div class="bar"><span>Low</span><i class="r" style="width:41.5%"></i><em>41.5%</em></div>
+<div class="bar"><span>Medium</span><i class="a" style="width:38.7%"></i><em>38.7%</em></div>
+<div class="bar"><span>High</span><i class="g" style="width:19.8%"></i><em>19.8%</em></div>
+<h3>Disease rate by BMI category</h3>
+<p class="sub">Obese patients show the highest diabetes (about 38%) and heart disease (about 31%) rates.</p></div>
+</div>
+<p class="note">All records are synthetic. Relationships are descriptive and are not medical advice or causal evidence.</p>
+</section>
+
+<section id="guide">
+<h2>2. Data Visualization Guide (Tableau)</h2>
+<p class="sub sans">Project: Health360, Comprehensive Healthcare Risk &amp; Disease Analytics</p>
+<h3>Calculated fields</h3>
+<pre><code>// Age Group
+IF [Age] &lt; 18 THEN "0-17"
+ELSEIF [Age] &lt; 30 THEN "18-29"
+ELSEIF [Age] &lt; 45 THEN "30-44"
+ELSEIF [Age] &lt; 60 THEN "45-59"
+ELSE "60+" END
+
+// BMI Category
+IF [BMI] &lt; 18.5 THEN "Underweight"
+ELSEIF [BMI] &lt; 25 THEN "Normal"
+ELSEIF [BMI] &lt; 30 THEN "Overweight"
+ELSE "Obese" END
+
+// Any Disease
+IF [Heart Disease]=1 OR [Diabetes]=1 OR [Stroke]=1 THEN 1 ELSE 0 END
+
+// Risk Score
+(IF [Smoking]=1 THEN 1 ELSE 0 END)
++ (IF [Alcohol]=1 THEN 1 ELSE 0 END)
++ (IF [BMI]&gt;=30 THEN 1 ELSE 0 END)
++ (IF [Cholesterol]&gt;=240 THEN 1 ELSE 0 END)
++ (IF [Glucose]&gt;=126 THEN 1 ELSE 0 END)
++ (IF [Blood Pressure]&gt;=140 THEN 1 ELSE 0 END)
+
+// Risk Level
+IF [Risk Score]&gt;=4 THEN "High"
+ELSEIF [Risk Score]&gt;=2 THEN "Medium"
+ELSE "Low" END</code></pre>
+<h3>Measures</h3>
+<pre><code>Total Patients = COUNTD([Patient ID])
+Diseased Patients = SUM([Any Disease])
+Prevalence % = SUM([Any Disease]) / COUNTD([Patient ID])</code></pre>
+<p class="note">Format Prevalence % as a percentage with 1 decimal. Adjust the 1/0 conditions to Yes/No if the dataset uses text values.</p>
+
+<h3>Sheets and charts</h3>
+<div class="tw"><table>
+<thead><tr><th>#</th><th>Sheet</th><th>Chart type</th><th>Fields</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>KPI Cards</td><td>Text</td><td>Total Patients, Prevalence %, High-Risk count, Avg BMI</td></tr>
+<tr><td>2</td><td>Disease Distribution</td><td>Bar</td><td>Heart Disease, Diabetes, Stroke</td></tr>
+<tr><td>3</td><td>Prevalence by Age Group</td><td>Bar</td><td>Age Group, Prevalence %</td></tr>
+<tr><td>4</td><td>Disease by BMI Category</td><td>Stacked bar</td><td>BMI Category, Diseased Patients</td></tr>
+<tr><td>5</td><td>Risk Level Split</td><td>Pie / Donut</td><td>Risk Level, Total Patients</td></tr>
+<tr><td>6</td><td>Smoking and Alcohol vs Disease</td><td>Side-by-side bar</td><td>Smoking, Alcohol, Prevalence %</td></tr>
+<tr><td>7</td><td>Exercise Level vs Disease</td><td>Bar</td><td>Exercise Level, Prevalence %</td></tr>
+<tr><td>8</td><td>Heatmap</td><td>Heatmap</td><td>Age Group, BMI Category, Prevalence %</td></tr>
+<tr><td>9</td><td>Symptom Prevalence</td><td>Horizontal bar</td><td>Chest Pain, Fatigue, Dizziness</td></tr>
+<tr><td>10</td><td>BMI vs Glucose</td><td>Scatter</td><td>BMI, Glucose, Any Disease, Cholesterol</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="insights">
+<h2>3. Insights</h2>
+<p class="sub sans">Source: healthcare_360_sample_dataset.xlsx, 20 patients, Jan to Mar 2026.</p>
+<div class="grid">
+<div class="card"><h3>Diabetes is the most common diagnosis: 5 of 20 patients</h3>
+<div class="bar"><span>Diabetes</span><i class="b" style="width:100%"></i><em>5</em></div>
+<div class="bar"><span>Asthma</span><i style="width:80%"></i><em>4</em></div>
+<div class="bar"><span>Fever</span><i style="width:80%"></i><em>4</em></div>
+<div class="bar"><span>Heart Disease</span><i style="width:80%"></i><em>4</em></div>
+<div class="bar"><span>Arthritis</span><i style="width:60%"></i><em>3</em></div></div>
+<div class="card"><h3>Heart disease costs ₹46,000 per patient, 3x the next-highest disease</h3>
+<div class="bar"><span>Heart Disease</span><i class="b" style="width:100%"></i><em>₹46,000</em></div>
+<div class="bar"><span>Arthritis</span><i style="width:33%"></i><em>₹15,167</em></div>
+<div class="bar"><span>Diabetes</span><i style="width:29.8%"></i><em>₹13,700</em></div>
+<div class="bar"><span>Asthma</span><i style="width:17.1%"></i><em>₹7,875</em></div>
+<div class="bar"><span>Fever</span><i style="width:7.4%"></i><em>₹3,400</em></div>
+<p class="note">Average across all patients: ₹17,155.</p></div>
+</div>
+<p>Heart disease patients also stay longest, 9.5 days on average against 2.0 for fever.</p>
+</section>
+
+<section id="case">
+<h2>4. Case Study: Early Detection &amp; Risk Intelligence for Chronic Diseases</h2>
+<h3>Executive summary</h3>
+<p>Chronic conditions such as heart disease, diabetes and stroke pose severe challenges to healthcare systems. Delayed diagnosis amplifies patient complications and inflates medical expenditure. This project delivers a Tableau health analytics suite that links demographic data, clinical vital signs and behavioral indicators, helping clinical teams and public health leaders move from reactive treatment to proactive risk prevention.</p>
+<h3>The problem</h3>
+<p>Healthcare systems capture large volumes of clinical and lifestyle data, but key indicators, from blood pressure trends and fasting glucose to exercise habits, often sit in disconnected spreadsheets. Manual analysis makes it hard for care managers to spot multi-variable risk patterns early, which delays interventions and leads to preventable emergency admissions.</p>
+
+<h3>Persona-driven scenarios</h3>
+<div class="grid persona">
+<div class="card"><h3>Dr. Michael Carter</h3><p class="role">Clinical Risk Assessment Officer</p>
+<p><b>Challenge:</b> Hard to spot high-risk patients quickly because records are processed manually.</p>
+<p><b>Solution:</b> Tableau early-warning scorecards and scatter plots combining BMI, blood pressure, cholesterol and glucose.</p>
+<p><b>Outcome:</b> Critical cohorts are identified fast for immediate follow-up, reducing complications.</p></div>
+<div class="card"><h3>Emily Rodriguez</h3><p class="role">Healthcare Data Analyst</p>
+<p><b>Challenge:</b> Understanding how lifestyle choices compound health risks across different patient groups.</p>
+<p><b>Solution:</b> Correlation matrices and lifestyle heatmaps linking exercise, smoking and alcohol to disease prevalence.</p>
+<p><b>Outcome:</b> Data-backed evidence for targeted preventive care plans.</p></div>
+<div class="card"><h3>Dr. Priya Nair</h3><p class="role">Public Health Researcher</p>
+<p><b>Challenge:</b> Analyzing population-wide trends and vulnerability without clear visual aggregation.</p>
+<p><b>Solution:</b> Age-group distributions, BMI classifications and symptom frequency maps (fatigue, chest pain, dizziness).</p>
+<p><b>Outcome:</b> Guides allocation of public health resources, screening drives and preventive policy.</p></div>
+</div>
+
+<h3>Data architecture</h3>
+<div class="tw"><table>
+<thead><tr><th>Category</th><th>Attributes</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td>Demographics</td><td>Age, Age Group</td><td>Cohort stratification and vulnerable population mapping</td></tr>
+<tr><td>Clinical vitals</td><td>BMI, Blood Pressure, Cholesterol, Glucose</td><td>Baseline risk evaluation and metabolic health scoring</td></tr>
+<tr><td>Lifestyle factors</td><td>Smoking, Alcohol, Exercise</td><td>Behavioral correlation and compound risk modeling</td></tr>
+<tr><td>Symptoms</td><td>Fatigue, Chest Pain, Dizziness</td><td>Early warning tracking and symptom severity analysis</td></tr>
+</tbody></table></div>
+
+<h3>Tableau dashboards</h3>
+<p><b>Executive Clinical Risk Matrix.</b> KPI cards (high-risk count, average BMI, glucose alerts) with interactive scatter plots to highlight intervention targets.</p>
+<p><b>Behavioral Risk Factor Heatmap.</b> Lifestyle habits mapped against chronic disease rates to isolate compound risk from smoking, inactivity and alcohol use.</p>
+<p><b>Population Demographics &amp; Symptom Profiler.</b> Stacked distributions of disease prevalence across age cohorts and BMI categories for public health planning.</p>
+
+<h3>Project impact</h3>
+<p><b>Proactive care shift.</b> Moves clinical operations from reactive treatment to early-stage intervention.</p>
+<p><b>360° risk insights.</b> Connects daily lifestyle habits with clinical diagnostic indicators.</p>
+</section>
+
+<section id="report">
+<h2>5. Final Project Report: Comprehensive Healthcare Risk &amp; Disease Analysis</h2>
+<p class="sub sans">Data Analytics with Tableau (Skillwallet / FutureSkills). Submitted by Nandita Telang, B.Tech CSE (2nd Year), Medicaps University, Indore.</p>
+
+<h3>1. Introduction</h3>
+<p><b>Overview.</b> Health360 is a Tableau project that studies patient demographics, clinical indicators and lifestyle behaviours to find disease trends and health risk correlations. The dataset covers age, BMI, blood pressure, cholesterol, glucose, smoking, alcohol, fatigue, chest pain, dizziness and exercise level, along with heart disease, diabetes and stroke.</p>
+<p>The project follows seven milestones: Data Collection &amp; Extraction, Data Preparation, Data Visualization, Dashboard, Story, Performance Testing and Web Integration. The output is a set of interactive dashboards and a data story that help healthcare professionals detect high-risk individuals, monitor health trends and plan preventive care.</p>
+<p><b>Purpose.</b></p>
+<ul>
+<li>Identify high-risk patients early using clinical indicators.</li>
+<li>Understand how smoking, alcohol and exercise influence chronic disease.</li>
+<li>Analyse disease prevalence across age groups and BMI categories to find vulnerable segments.</li>
+<li>Give visual insights that support clinical decisions, preventive care and resource allocation.</li>
+</ul>
+
+<h3>2. Ideation phase</h3>
+<p><b>Problem statement.</b> Chronic diseases such as heart disease, diabetes and stroke make early identification of high-risk patients a major challenge. Manual record analysis is slow and hides patterns, and late detection brings complications, higher costs and poorer outcomes. An interactive visual way to analyse health indicators and lifestyle factors together is needed.</p>
+<h3>Empathy map canvas</h3>
+<div class="tw"><table>
+<thead><tr><th>Aspect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Who has the problem</td><td>Clinicians, healthcare data analysts and public health researchers</td></tr>
+<tr><td>What the problem is</td><td>Difficulty detecting high-risk patients and contributing factors from raw records</td></tr>
+<tr><td>Why it matters</td><td>Late detection raises complications and costs and reduces outcomes</td></tr>
+<tr><td>Desired outcome</td><td>Dashboards that reveal risk patterns and support timely intervention</td></tr>
+</tbody></table></div>
+<div class="tw" style="margin-top:12px"><table>
+<thead><tr><th>Persona</th><th>Says</th><th>Thinks</th><th>Does</th><th>Feels</th></tr></thead>
+<tbody>
+<tr><td>Dr. Michael Carter, Clinical Risk Assessment Officer</td><td>"I need to spot high-risk patients early."</td><td>Manual record review is too slow to catch patterns.</td><td>Reviews BMI, blood pressure, cholesterol and glucose for each patient.</td><td>Pressured by the risk of delayed diagnosis.</td></tr>
+<tr><td>Emily Rodriguez, Healthcare Data Analyst</td><td>"How do lifestyle habits relate to disease?"</td><td>Large datasets are hard to interpret manually.</td><td>Compares smoking, alcohol and exercise against disease outcomes.</td><td>Frustrated by scattered, unstructured data.</td></tr>
+<tr><td>Dr. Priya Nair, Public Health Researcher</td><td>"Which groups are most vulnerable?"</td><td>Population-level patterns need clear visualisation.</td><td>Studies age groups, BMI categories and symptom prevalence.</td><td>Motivated to shape effective health policy.</td></tr>
+</tbody></table></div>
+<h3>Brainstorming</h3>
+<ul>
+<li>KPI cards for total patients, disease counts and overall prevalence.</li>
+<li>Disease prevalence by age group and by BMI category.</li>
+<li>Heatmaps linking lifestyle behaviours and diseases.</li>
+<li>Distribution charts for blood pressure, cholesterol and glucose.</li>
+<li>Symptom analysis (chest pain, fatigue, dizziness) against disease occurrence.</li>
+<li>Filters for age, gender, disease type and lifestyle habits.</li>
+</ul>
+<p>The team kept the ideas that serve all three personas: KPI summaries, age and BMI analysis, lifestyle heatmaps and symptom views, combined in interactive dashboards.</p>
+
+<h3>3. Requirement analysis</h3>
+<p><b>Customer journey map.</b></p>
+<div class="tw"><table>
+<thead><tr><th>Stage</th><th>User action</th><th>Experience</th><th>Opportunity</th></tr></thead>
+<tbody>
+<tr><td>Awareness</td><td>Realises manual analysis is slow</td><td>Frustration</td><td>Offer a ready visual dashboard</td></tr>
+<tr><td>Access</td><td>Opens the Health360 dashboard</td><td>Clean overview with KPIs</td><td>Simple navigation and filters</td></tr>
+<tr><td>Exploration</td><td>Filters by age, BMI, disease and lifestyle</td><td>Patterns appear quickly</td><td>Interactive charts with tooltips</td></tr>
+<tr><td>Insight</td><td>Identifies high-risk groups and key factors</td><td>Confidence in findings</td><td>Highlight top contributing factors</td></tr>
+<tr><td>Action</td><td>Plans interventions, awareness programmes, resource allocation</td><td>Informed decisions</td><td>Share dashboards via the web</td></tr>
+</tbody></table></div>
+<div class="grid" style="margin-top:12px">
+<div class="card"><h3>Functional requirements</h3><ul>
+<li>Import and clean the healthcare dataset in Tableau.</li>
+<li>Create calculated fields (age groups, BMI categories).</li>
+<li>Build charts for disease prevalence, clinical indicators and lifestyle.</li>
+<li>Provide interactive filters and KPI metrics.</li>
+<li>Combine worksheets into dashboards and a story.</li>
+<li>Publish the work through a web link.</li></ul></div>
+<div class="card"><h3>Non-functional requirements</h3><ul>
+<li>Dashboards load quickly and respond smoothly to filters.</li>
+<li>Visuals are clear, consistent and easy for non-technical users.</li>
+<li>Data is accurate and free of duplicates and missing values.</li></ul></div>
+</div>
+<h3>Data flow</h3>
+<ol>
+<li>Data source: patient healthcare dataset (CSV / Excel).</li>
+<li>Data extraction: the dataset is connected to Tableau.</li>
+<li>Data preparation: cleaning, handling missing values, creating age and BMI groups.</li>
+<li>Visualisation: worksheets built for each analysis.</li>
+<li>Dashboard and story: worksheets combined into dashboards and a narrative.</li>
+<li>Publishing: dashboards shared through the web.</li>
+<li>End users: clinicians, analysts and researchers view insights and make decisions.</li>
+</ol>
+<h3>Technology stack</h3>
+<div class="tw"><table>
+<thead><tr><th>Component</th><th>Tool</th></tr></thead>
+<tbody>
+<tr><td>Visualisation and dashboards</td><td>Tableau (Desktop / Public)</td></tr>
+<tr><td>Data format</td><td>CSV / Excel dataset</td></tr>
+<tr><td>Data preparation</td><td>Tableau Prep or Tableau Desktop data interpreter and calculated fields</td></tr>
+<tr><td>Learning platform</td><td>Skillwallet (FutureSkills)</td></tr>
+<tr><td>Publishing</td><td>Tableau Public / web embedding</td></tr>
+</tbody></table></div>
+
+<h3>4. Project design</h3>
+<p><b>Problem-solution fit.</b> Clinicians and analysts cannot quickly see which patients and groups are at high risk. Tableau dashboards turn large patient records into interactive visuals, and each persona is served directly:</p>
+<ul>
+<li>Dr. Carter gets KPI metrics and clinical indicator charts to flag high-risk individuals.</li>
+<li>Emily Rodriguez gets heatmaps and comparative charts to link lifestyle with disease.</li>
+<li>Dr. Priya Nair gets age-group, BMI and symptom views to find vulnerable populations.</li>
+</ul>
+<p><b>Proposed solution.</b> A set of interactive Tableau dashboards:</p>
+<ul>
+<li>Overview dashboard: KPI cards and overall disease prevalence.</li>
+<li>Clinical indicators dashboard: BMI, blood pressure, cholesterol and glucose.</li>
+<li>Lifestyle dashboard: smoking, alcohol and exercise against heart disease, diabetes and stroke.</li>
+<li>Demographic dashboard: prevalence by age group and BMI category.</li>
+<li>Symptoms view: chest pain, fatigue and dizziness patterns.</li>
+<li>Story: a guided narrative of key findings and recommendations.</li>
+</ul>
+<p><b>Solution architecture.</b> Four layers: the data layer (raw dataset), the preparation layer (cleaning and calculated fields), the analytics layer (worksheets, filters, parameters, KPIs) and the presentation layer (dashboards, story, web integration).</p>
+
+<h3>5. Project planning</h3>
+<div class="tw"><table>
+<thead><tr><th>Milestone</th><th>Activity</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Data Collection &amp; Extraction</td><td>Completed</td></tr>
+<tr><td>2</td><td>Data Preparation</td><td>Completed</td></tr>
+<tr><td>3</td><td>Data Visualization</td><td>Completed</td></tr>
+<tr><td>4</td><td>Dashboard</td><td>Completed</td></tr>
+<tr><td>5</td><td>Story</td><td>Completed</td></tr>
+<tr><td>6</td><td>Performance Testing</td><td>Completed</td></tr>
+<tr><td>7</td><td>Web Integration</td><td>Completed</td></tr>
+</tbody></table></div>
+
+<h3>6. Functional and performance testing</h3>
+<div class="tw"><table>
+<thead><tr><th>Test</th><th>What was checked</th><th>Expected result</th></tr></thead>
+<tbody>
+<tr><td>Data load</td><td>Dataset loads fully with the correct rows and columns</td><td>No missing or corrupted records</td></tr>
+<tr><td>Calculated fields</td><td>Age group and BMI category calculations</td><td>Correct categorisation for sample records</td></tr>
+<tr><td>Filters</td><td>Age, gender, disease and lifestyle filters</td><td>All linked charts update correctly</td></tr>
+<tr><td>Dashboard actions</td><td>Highlighting and filter actions between sheets</td><td>Interactions respond without errors</td></tr>
+<tr><td>Load time</td><td>Time for dashboards to render</td><td>Loads quickly with no noticeable lag</td></tr>
+<tr><td>Layout</td><td>Display on different screen sizes</td><td>Visuals stay readable and aligned</td></tr>
+<tr><td>Web integration</td><td>Published link opens and works</td><td>Dashboard displays and filters work online</td></tr>
+</tbody></table></div>
+
+<h3>7. Results</h3>
+<p>Key insights summarised from the dashboards:</p>
+<ul>
+<li>The age group with the highest prevalence of each disease (heart disease peaks in the 75+ group in the dashboard report above).</li>
+<li>The BMI category with the highest disease share (obese in the dashboard report above).</li>
+<li>How smoking, alcohol and low exercise relate to heart disease, diabetes and stroke.</li>
+<li>Which clinical indicators (blood pressure, cholesterol, glucose) are most associated with high-risk patients.</li>
+</ul>
+<p class="note">Output screenshots (KPI overview, age and BMI prevalence, clinical indicators, lifestyle heatmap, symptom analysis, final dashboard and story, published web dashboard) can be added here as images.</p>
+
+<h3>8. Advantages and disadvantages</h3>
+<div class="grid">
+<div class="card"><h3>Advantages</h3><ul>
+<li>Turns large patient datasets into clear, interactive visuals.</li>
+<li>Quickly identifies high-risk individuals and vulnerable groups.</li>
+<li>Reveals links between lifestyle behaviours and chronic disease.</li>
+<li>Supports preventive care, treatment planning and resource allocation.</li>
+<li>Easy to share on the web, with no technical skill needed.</li></ul></div>
+<div class="card"><h3>Disadvantages</h3><ul>
+<li>Accuracy depends on the quality and completeness of the dataset.</li>
+<li>Shows correlations, not proven causes, so findings need clinical validation.</li>
+<li>Does not predict individual risk with a machine learning model.</li>
+<li>Static dataset, so no real-time updates without a live source.</li>
+<li>Patient data needs careful privacy handling when published.</li></ul></div>
+</div>
+
+<h3>9. Conclusion</h3>
+<p>Health360 shows how Tableau can convert complex healthcare data into clear, actionable insight. By analysing clinical indicators, lifestyle behaviours and demographics together, the dashboards help clinicians identify high-risk patients, help analysts understand lifestyle influences and help researchers find vulnerable populations. The project supports proactive healthcare management, better preventive strategies and more informed clinical and policy decisions.</p>
+
+<h3>10. Future scope</h3>
+<ul>
+<li>Connect dashboards to a live hospital database for real-time monitoring.</li>
+<li>Add machine learning models to predict individual disease risk.</li>
+<li>Include more data such as family history, diet, sleep and medication.</li>
+<li>Add alerts for patients crossing high-risk thresholds.</li>
+<li>Build mobile-friendly dashboards for doctors and field health workers.</li>
+<li>Extend the analysis to more diseases and larger, multi-region populations.</li>
+</ul>
+
+<h3>11. Appendix</h3>
+<p>Source code: not applicable. The project is built with Tableau worksheets and calculated fields, which are listed in the Data Visualization Guide section above.</p>
+</section>
+
+<footer class="sans">Health360 • Synthetic educational dataset • Not for clinical use.</footer>
+</main>
+</body>
+</html>
